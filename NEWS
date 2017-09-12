@@ -1,3 +1,11 @@
-# ilostat 0.1
+# Rilostat 0.2
+
+* fixed .onload warnings
+* reviewed import packages version
+* fixed sdmx codelist annotation multilang issues
+* revised import package list and version
+* fixed tuto mapper error
+
+# Rilostat 0.1
 
 * first release
