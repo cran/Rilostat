@@ -4,8 +4,8 @@
 
 <br>
 
-<!-- [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/Rilostat)](https://cran.r-project.org/package=Rilostat) -->
-<!-- [![Downloads](http://cranlogs.r-pkg.org/badges/iostat)](https://cran.r-project.org/package=Rilostat) -->
+[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/Rilostat)](https://cran.r-project.org/package=Rilostat)
+[![Downloads](http://cranlogs.r-pkg.org/badges/Rilostat)](https://cran.r-project.org/package=Rilostat)
 
 <!-- [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ilostat/Rilostat?branch=master&svg=true)](https://ci.appveyor.com/project/ilostat/Rilostat) -->
 <!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/Rilostat)](https://cran.r-project.org/package=Rilostat) -->
@@ -46,6 +46,8 @@ The developer of this package drew extensive inspiration from the [eurostat R pa
 
 ## <a name="installation"></a>Installation
 
+Download and install [R from CRAN](https://cran.r-project.org/), install [RStudio's IDE](http://www.rstudio.com/ide/download/), a powerful user interface for R.
+Then use command:
 
 
 ```r

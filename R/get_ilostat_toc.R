@@ -20,7 +20,7 @@
 #'      \item{\code{id}} : The codename of dataset of theme, will be used by the get_ilostat and get_ilostat_raw functions,
 #'      \item{\code{indicator or ref_area}} : The indicator or ref_area code of dataset,
 #'      \item{\code{indicator.label or ref_area.label}} : The indicator or ref_area name of dataset,
-#'      \item{\code{freq}}  : The freqency code of dataset,
+#'      \item{\code{freq}}  : The frequency code of dataset,
 #'      \item{\code{freq.label}} : Is freq name of dataset,
 #'      \item{\code{size}} : Size of the csv.gz files,
 #'      \item{\code{data.start}} : First time period of the dataset, 
@@ -74,9 +74,22 @@ get_ilostat_toc <- function(segment = getOption('ilostat_segment', 'indicator'),
 							filters = getOption('ilostat_filter', 'none'),
 							fixed = getOption('ilostat_fixed', TRUE)) {
   
+  if(stringr::str_detect(tolower(segment), 'model')){
+	
+	lang <- 'en' 
+	segment <- 'modelled_estimates'
+  
+  }
+  
   set_ilostat_toc(segment, lang)
   
   y <- get(paste0(".ilostatTOC", segment, lang), envir = .ilostatEnv) 
+  
+  if(segment == 'modelled_estimates'){
+  
+    y <- filter_(y, "file_type %in% 'dta'")
+  
+  }
   
   if(!is_tibble(y)){
   

@@ -2,8 +2,8 @@ Package: Rilostat
 Type: Package
 Title: ILO Open Data via Ilostat Bulk Download Facility or SDMX Web
         Service
-Date: 2017-09-12
-Version: 0.2
+Date: 2018-02-13
+Version: 0.2.1
 Encoding: UTF-8
 Authors@R: c(	person("ILO Department of Statistics", role = c("cph", "fnd"), email = "ilostat@ilo.org"), 
 				person("David Bescond", role = c("aut", "cre"), email = "bescond@ilo.org"),
@@ -25,8 +25,8 @@ BugReports: https://github.com/ilostat/Rilostat/issues
 Repository: CRAN
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2017-09-12 08:51:22 UTC; Statistics
+Packaged: 2018-02-13 13:58:41 UTC; bescond
 Author: ILO Department of Statistics [cph, fnd],
   David Bescond [aut, cre],
   Rosina Gammarano [ctr]
-Date/Publication: 2017-09-12 08:59:50 UTC
+Date/Publication: 2018-02-13 14:05:40 UTC
