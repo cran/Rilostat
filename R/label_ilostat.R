@@ -1,4 +1,4 @@
-#' @title Get Ilostat Codes
+#' @title Switch Ilostat codes and labels
 #' @description Gets definitions/labels for ilostat codes from ilostat dictionaries.
 #' @param x A character or a factor vector or a data_frame to labelled. 
 #' @param dic  A string (vector) naming ilostat dictionary or dictionaries.
@@ -18,13 +18,13 @@
 #' @references
 #' See citation("Rilostat")
 #' ilostat bulk download facility user guidelines 
-#' \url{http://www.ilo.org/ilostat-files/WEB_bulk_download/ILOSTAT_BulkDownload_Guidelines.pdf}
+#' \url{https://www.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
 #' @examples
 #' \dontrun{
-#' 	 dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", cache = FALSE)
-#'   dat_lab <- label_ilostat(dat)
-#'   head(dat_lab)
-#'   clean_ilostat_cache() 
+#'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", cache = FALSE)
+#'  dat_lab <- label_ilostat(dat)
+#'  head(dat_lab)
+#'  clean_ilostat_cache() 
 #' }
 #' @export
 label_ilostat <- function(	x, 
@@ -73,13 +73,13 @@ label_ilostat <- function(	x,
 	          
       y_code <- x[, code, drop = FALSE]            
 	  
-	  y <- as_data_frame(cbind(y_code, y))
+	  y <- as_tibble(cbind(y_code, y))
 	  
 	  ref_cols <- ilostat_cols_ref[ilostat_cols_ref %in% colnames(y)]
 	  
 	  order_cols <- c(ref_cols, colnames(y)[!colnames(y) %in% ref_cols])
 	  
-	  y <- select_(y, .dots = order_cols)
+	  y <- select_at(y, .vars = order_cols)
 	
     }
 	
@@ -133,7 +133,7 @@ label_ilostat <- function(	x,
 
   if (is.data.frame(y) && length(y) > 1) {
     
-	y <- as_data_frame(y)
+	y <- as_tibble(y)
   
   }  
   

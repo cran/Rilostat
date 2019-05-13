@@ -2,10 +2,10 @@
 % Please edit documentation in R/label_ilostat.R
 \name{label_ilostat}
 \alias{label_ilostat}
-\title{Get Ilostat Codes}
+\title{Switch Ilostat codes and labels}
 \usage{
-label_ilostat(x, dic = NULL, code = NULL, lang = getOption("ilostat_lang",
-  "en"))
+label_ilostat(x, dic = NULL, code = NULL,
+  lang = getOption("ilostat_lang", "en"))
 }
 \arguments{
 \item{x}{A character or a factor vector or a data_frame to labelled.}
@@ -34,16 +34,16 @@ A character or a factor vector of codes returns a corresponding vector of defini
 }
 \examples{
 \dontrun{
-	 dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", cache = FALSE)
-  dat_lab <- label_ilostat(dat)
-  head(dat_lab)
-  clean_ilostat_cache() 
+ dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", cache = FALSE)
+ dat_lab <- label_ilostat(dat)
+ head(dat_lab)
+ clean_ilostat_cache() 
 }
 }
 \references{
 See citation("Rilostat")
 ilostat bulk download facility user guidelines 
-\url{http://www.ilo.org/ilostat-files/WEB_bulk_download/ILOSTAT_BulkDownload_Guidelines.pdf}
+\url{https://www.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
 }
 \author{
 David Bescond \email{bescond@ilo.org}

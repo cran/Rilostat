@@ -33,7 +33,7 @@
 #' @param cache a logical whether to do caching. Default is \code{TRUE}. Affects
 #' 			only queries from the ilostat bulk download facility. 
 #'			Can be set also with options(ilostat_cache = FALSE),
-#' @param cache_update a logical whether to update cache. Check cache update with \code{last.update} store on the cache file name 
+#' @param cache_update a logical whether to update cache. Check cache update with last.update attribute store on the cache file name 
 #' 			and the one from the table of contents. Can be set also with
 #'        	options(ilostat_cache_update = FALSE). Default is \code{TRUE},  
 #' @param cache_dir a path to a cache directory. The directory has to exist.
@@ -61,7 +61,7 @@
 #' 
 #'   The bulk download facility is the fastest method to download whole datasets.
 #'   It is also often the only way as the sdmx API has limitation of maximum 
-#'   200 000 records at the same time and whole datasets usually exceeds that. 
+#'   300 000 records at the same time and whole datasets usually exceeds that. 
 #'
 #'   By default datasets from the bulk download facility are cached as they are
 #'   often rather large. 
@@ -83,29 +83,29 @@
 #' @examples 
 #' \dontrun{
 #' ############# get simple dataset
-#' 	dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
+#'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
 #'  head(dat)
-#' 	dat <- get_ilostat("NZL_Q", segment = "ref_area")
+#'  dat <- get_ilostat("NZL_Q", segment = "ref_area")
 #'  head(dat)
 #'
-#' 	dir.create(file.path(tempdir(), "r_cache"))
-#' 	dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", 
+#'  dir.create(file.path(tempdir(), "r_cache"))
+#'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", 
 #'                   cache_dir = file.path(tempdir(), "r_cache"))
 #'  head(dat)
 #'
 #'  clean_ilostat_cache(cache_dir = file.path(tempdir(), "r_cache")) 
 #'
 #'  options(ilostat_update = TRUE)
-#' 	dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
-#' 	head(dat)
-#' 	options(ilostat_update = FALSE)
+#'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
+#'  head(dat)
+#'  options(ilostat_update = FALSE)
 #'  options(ilostat_cache_dir = file.path(tempdir(), "r_cache"))
-#' 	dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
+#'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
 #'
 #'  clean_ilostat_cache() 
 #'
 #' ############# get multiple datasets
-#' 	dat <- get_ilostat(c("CPI_ACPI_COI_RT_M", 'CPI_ACPI_COI_RT_Q'), cache = FALSE)
+#'  dat <- get_ilostat(c("CPI_ACPI_COI_RT_M", 'CPI_ACPI_COI_RT_Q'), cache = FALSE)
 #'  head(dat)
 #'  toc <- get_ilostat_toc(search = 'CPI_')
 #'  head(toc)
@@ -113,10 +113,10 @@
 #'
 #' ############# get datasets with filters
 #'  dat <- get_ilostat(id = c("UNE_2UNE_SEX_AGE_NB_A", 'EMP_2EMP_SEX_AGE_NB_A'), 
-#' 			filters = list(	ref_area = "FRA", 
-#' 			classif1 = "AGE_YTHADULT_YGE15", 
-#' 			time = "2016",
-#' 			sex = c("T", 'SEX_F')), quiet = TRUE)
+#'  		filters = list(	ref_area = "FRA", 
+#'  		classif1 = "AGE_YTHADULT_YGE15", 
+#'  		time = "2016",
+#'  		sex = c("T", 'SEX_F')), quiet = TRUE)
 #'  head(dat)
 #'  clean_ilostat_cache() 
 #'
@@ -189,7 +189,7 @@ get_ilostat <- function(id,
 	
   order_cols <- c(ref_cols, colnames(dat)[!colnames(dat) %in% ref_cols])
 	
-  select_(dat, .dots = order_cols)
+  select_at(dat, .vars = order_cols)
  
 }
 
@@ -212,12 +212,14 @@ get_ilostat_dat <- function(id,
 							){
 
   # check id validity and return last update
-  test = "ifelse(substr(last.update, 6,8) %in% '/20', last.update %>% strptime('%d/%m/%Y  %H:%M') %>% format('%Y%m%dT%H%M'), last.update)"
+  ref_id <- id
   last_toc_update <- get_ilostat_toc(segment, lang) %>% 
-					filter_(paste0("id %in% '", id, "'")) %>% 
-					distinct_(.dots = c('last.update')) %>% 
-					mutate_("last.update" = test) %>%
-					t %>% as.character
+					 filter(id %in% ref_id) 
+  last_toc_update <- unique(last_toc_update$last.update)
+					
+  last_toc_update <- ifelse(substr(last_toc_update, 6,8) %in% '/20', 
+												format(strptime(last_toc_update, '%d/%m/%Y  %H:%M'), '%Y%m%dT%H%M'), 
+												last_toc_update) 
 					
   if(length(last_toc_update) == 0){
     
@@ -259,7 +261,7 @@ get_ilostat_dat <- function(id,
   
   }
   
-  # if cache = FALSE or update or new: dowload else read from cache
+  # if cache = FALSE or update or new: download else read from cache
   if (!cache || cache_update || !file.exists(cache_file) ){
       
 	  dat <- get_ilostat_raw(id, segment, cache_file, cache_dir, cache_format, quiet)
@@ -401,7 +403,7 @@ get_ilostat_dat <- function(id,
 	
 	order_cols <- c(ref_cols, colnames(dat)[!colnames(dat) %in% ref_cols])
 	
-	dat <- select_(dat, .dots = order_cols)
+	dat <- select_at(dat, .vars = order_cols)
 	
 
 	if(cache_format == 'rds'){
@@ -459,7 +461,7 @@ get_ilostat_dat <- function(id,
 	  
     if(!is.null(filters)){
         
-	  dat <- filter_(dat, filters)
+	  dat <- filter(dat, eval(parse(text = filters)))
 	  
     }
 
@@ -472,7 +474,7 @@ get_ilostat_dat <- function(id,
 	  
 	ref_dataonly <- ref_dataonly[ref_dataonly %in% names(dat)] 
 	  
-	dat <- select_(dat, .dots = ref_dataonly)
+	dat <- select_at(dat, .vars = ref_dataonly)
 	
   }
   if(detail %in% 'serieskeysonly'){
@@ -481,7 +483,7 @@ get_ilostat_dat <- function(id,
 	  
 	ref_serieskeysonly <- ref_serieskeysonly[ref_serieskeysonly %in% names(dat)] 
 	  
-	dat <- select_(dat, .dots = ref_serieskeysonly) %>% distinct()
+	dat <- select_at(dat, .vars =  ref_serieskeysonly) %>% distinct()
 	
   }
   if(detail %in% 'bestsourceonly'){
@@ -494,9 +496,9 @@ get_ilostat_dat <- function(id,
 	  
 	rest_bestsourceonly <- names(dat)[!names(dat)%in% ref_bestsourceonly]
 	  
-	summa <- paste0("list(", paste0(paste0(rest_bestsourceonly, " = 'first(",rest_bestsourceonly, ")'"), collapse = ', '), ")")
+	summa <-  eval(parse(text = paste0("list(", paste0(paste0(rest_bestsourceonly, " = quo(first(",rest_bestsourceonly, "))"), collapse = ', '), ")")))
 	  
-	dat <- group_by_(dat, .dots = ref_bestsourceonly) %>% summarise_(.dots = eval(parse(text = summa))) %>% ungroup
+	dat <- group_by_at(dat, .vars = ref_bestsourceonly) %>% summarise(!!!summa) %>% ungroup
       
 	invisible(gc(reset = TRUE))	
   }

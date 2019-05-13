@@ -5,8 +5,9 @@
 \title{Read Ilostat Data}
 \usage{
 get_ilostat(id, segment = getOption("ilostat_segment", "indicator"),
-  type = getOption("ilostat_type", "code"), lang = getOption("ilostat_lang",
-  "en"), time_format = getOption("ilostat_time_format", "raw"),
+  type = getOption("ilostat_type", "code"),
+  lang = getOption("ilostat_lang", "en"),
+  time_format = getOption("ilostat_time_format", "raw"),
   filters = getOption("ilostat_filter", "none"),
   fixed = getOption("ilostat_fixed", TRUE),
   detail = getOption("ilostat_detail", "full"),
@@ -14,8 +15,9 @@ get_ilostat(id, segment = getOption("ilostat_segment", "indicator"),
   cache_update = getOption("ilostat_cache_update", TRUE),
   cache_dir = getOption("ilostat_cache_dir", NULL),
   cache_format = getOption("ilostat_cache_format", "rds"),
-  back = getOption("ilostat_back", TRUE), cmd = getOption("ilostat_cmd",
-  "none"), quiet = getOption("ilostat_quiet", FALSE))
+  back = getOption("ilostat_back", TRUE),
+  cmd = getOption("ilostat_cmd", "none"),
+  quiet = getOption("ilostat_quiet", FALSE))
 }
 \arguments{
 \item{id}{A code name for the dataset of interest.
@@ -59,7 +61,7 @@ best source only at the series key levels, see details.
     only queries from the ilostat bulk download facility. 
 Can be set also with options(ilostat_cache = FALSE),}
 
-\item{cache_update}{a logical whether to update cache. Check cache update with \code{last.update} store on the cache file name 
+\item{cache_update}{a logical whether to update cache. Check cache update with last.update attribute store on the cache file name 
  and the one from the table of contents. Can be set also with
 options(ilostat_cache_update = FALSE). Default is \code{TRUE},}
 
@@ -100,7 +102,7 @@ Download datasets from ilostat \url{www.ilo.org/ilostat} via bulk download facil
 
   The bulk download facility is the fastest method to download whole datasets.
   It is also often the only way as the sdmx API has limitation of maximum 
-  200 000 records at the same time and whole datasets usually exceeds that. 
+  300 000 records at the same time and whole datasets usually exceeds that. 
 
   By default datasets from the bulk download facility are cached as they are
   often rather large. 
@@ -116,29 +118,29 @@ Download datasets from ilostat \url{www.ilo.org/ilostat} via bulk download facil
 \examples{
 \dontrun{
 ############# get simple dataset
-	dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
+ dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
  head(dat)
-	dat <- get_ilostat("NZL_Q", segment = "ref_area")
+ dat <- get_ilostat("NZL_Q", segment = "ref_area")
  head(dat)
 
-	dir.create(file.path(tempdir(), "r_cache"))
-	dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", 
+ dir.create(file.path(tempdir(), "r_cache"))
+ dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", 
                   cache_dir = file.path(tempdir(), "r_cache"))
  head(dat)
 
  clean_ilostat_cache(cache_dir = file.path(tempdir(), "r_cache")) 
 
  options(ilostat_update = TRUE)
-	dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
-	head(dat)
-	options(ilostat_update = FALSE)
+ dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
+ head(dat)
+ options(ilostat_update = FALSE)
  options(ilostat_cache_dir = file.path(tempdir(), "r_cache"))
-	dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
+ dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A")
 
  clean_ilostat_cache() 
 
 ############# get multiple datasets
-	dat <- get_ilostat(c("CPI_ACPI_COI_RT_M", 'CPI_ACPI_COI_RT_Q'), cache = FALSE)
+ dat <- get_ilostat(c("CPI_ACPI_COI_RT_M", 'CPI_ACPI_COI_RT_Q'), cache = FALSE)
  head(dat)
  toc <- get_ilostat_toc(search = 'CPI_')
  head(toc)
@@ -146,10 +148,10 @@ Download datasets from ilostat \url{www.ilo.org/ilostat} via bulk download facil
 
 ############# get datasets with filters
  dat <- get_ilostat(id = c("UNE_2UNE_SEX_AGE_NB_A", 'EMP_2EMP_SEX_AGE_NB_A'), 
-			filters = list(	ref_area = "FRA", 
-			classif1 = "AGE_YTHADULT_YGE15", 
-			time = "2016",
-			sex = c("T", 'SEX_F')), quiet = TRUE)
+ 		filters = list(	ref_area = "FRA", 
+ 		classif1 = "AGE_YTHADULT_YGE15", 
+ 		time = "2016",
+ 		sex = c("T", 'SEX_F')), quiet = TRUE)
  head(dat)
  clean_ilostat_cache() 
 

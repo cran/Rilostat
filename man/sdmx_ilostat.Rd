@@ -2,11 +2,11 @@
 % Please edit documentation in R/sdmx_ilostat.R
 \name{sdmx_ilostat}
 \alias{sdmx_ilostat}
-\title{Read Ilostat Data, Metadata via ILO DSMX api}
+\title{Read Ilostat Data, Metadata via ILO SDMX api}
 \usage{
 sdmx_ilostat(dsd, sdmx_resource = getOption("ilostat_sdmx_resource",
-  "codelist"), sdmx_format = getOption("ilostat_sdmx_format", "compact_2_1"),
-  lang = getOption("ilostat_lang", "en"),
+  "codelist"), sdmx_format = getOption("ilostat_sdmx_format",
+  "structurespecificdata"), lang = getOption("ilostat_lang", "en"),
   count = getOption("ilostat_sdmx_count", FALSE),
   quiet = getOption("ilostat_quiet", FALSE))
 }
@@ -16,10 +16,9 @@ sdmx_ilostat(dsd, sdmx_resource = getOption("ilostat_sdmx_resource",
 \item{sdmx_resource}{: a character, type of info to be returned from the sdmx api: \code{'codelist'} (default), 
 \code{'data'}, \code{'dataflow'}, \code{'conceptref'},}
 
-\item{sdmx_format}{: a character, format of info to be returned from the sdmx api: \code{'compact_2_1'} (default), 
-coming soon: \code{'generic_2_1'}, \code{'json'},}
+\item{sdmx_format}{: for data only, a character, format of info to be returned from the sdmx api: \code{'structurespecificdata'} (default) also available \code{'csv'}.}
 
-\item{lang}{a character, code for language. Available are \code{"en"} (default), 
+\item{lang}{a character for language. Available are \code{"en"} (default), 
 \code{"fr"} and \code{"es"}. Can be set also with options(ilostat_lang = 'fr'),}
 
 \item{count}{a logical, count data records only if \code{resource = 'data'}, \code{FALSE} (default),}
@@ -34,78 +33,82 @@ query codelist, data and metadata via ilo sdmx api
 \dontrun{
 ########## get codelist
 # fetch collection define on ILOSTAT
-dic <- sdmx_ilostat(dsd = "CL_COLLECTION", lang ="en")
-head(dic)
+ dic <- sdmx_ilostat(dsd = "CL_COLLECTION", lang ="en")
+ head(dic)
 
 # fetch country available on ILOSTAT
-dic <- sdmx_ilostat(dsd = "CL_COUNTRY", lang ="es")
-head(dic)
+ dic <- sdmx_ilostat(dsd = "CL_AREA", lang ="es")
+ head(dic)
 
-# fetch indicator define in collection STI
-sdmx_ilostat(dsd = "CL_INDICATOR_STI", lang ="fr")
-head(dic)
+# fetch classif ECO available on ILOSTAT
+ dic <- sdmx_ilostat(dsd = "CL_ECO", lang ="en")
+ head(dic)
+
+# fetch classif ECO verion available on ILOSTAT
+ dic <- sdmx_ilostat(dsd = "CL_CLASSIF_ECO", lang ="en")
+ head(dic)
+
+# fetch note type available on ILOSTAT
+ dic <- sdmx_ilostat(dsd = "CL_NOTE_TYPE", lang ="en")
+ head(dic)
+
+# fetch note "Repository" available on ILOSTAT
+ dic <- sdmx_ilostat(dsd = "CL_NOTE_R1", lang ="en")
+ head(dic)
 
 ########## get data
 
 ### with attribute
-dat <- sdmx_ilostat(dsd = 'STI_ALB_EMP_TEMP_SEX_AGE_NB', 
+ dat <- sdmx_ilostat(dsd = 'STI_ALB_EMP_TEMP_SEX_AGE_NB', 
                     sdmx_resource = 'data')
-head(dat)
+ head(dat)
 
 # without attribute
-dat <- sdmx_ilostat(dsd = "STI_DEU_EMP_TEMP_SEX_AGE_NB?detail=dataonly", 
+ dat <- sdmx_ilostat(dsd = "STI_DEU_EMP_TEMP_SEX_AGE_NB?detail=dataonly", 
                     sdmx_resource = 'data')
 
 # of last N data
-dat <- sdmx_ilostat(dsd = "STI_ITA_EMP_TEMP_SEX_AGE_NB?lastNObservations=1",
+ dat <- sdmx_ilostat(dsd = "STI_ITA_EMP_TEMP_SEX_AGE_NB?lastNObservations=1",
                     sdmx_resource = 'data')
-head(dat)
+ head(dat)
 
 # of first N data
-dat <- sdmx_ilostat(dsd = "STI_ARG_EMP_TEMP_SEX_AGE_NB?firstNObservations=2", 
+ dat <- sdmx_ilostat(dsd = "STI_ARG_EMP_TEMP_SEX_AGE_NB?firstNObservations=2", 
                     sdmx_resource = 'data')
-head(dat)
+ head(dat)
 
 ######## with multi country and advanced filters
 
 # to get the order of the filter first get the conceptref of the DSD
 
-filter_position <- sdmx_ilostat(dsd = 'STI_ALL_EMP_TEMP_SEX_AGE_NB', 
-					   sdmx_resource = 'conceptref')
-filter_position
+ filter_position <- sdmx_ilostat(dsd = 'STI_ALL_EMP_TEMP_SEX_AGE_NB', 
+ 				   sdmx_resource = 'conceptref')
+ filter_position
 
 # COUNTRY and FREQ are in second and third position of the filters
 
-dat <- sdmx_ilostat(dsd = "STI_ALL_EMP_TEMP_SEX_AGE_NB/.FRA+DEU.M....", 
+ dat <- sdmx_ilostat(dsd = "STI_ALL_EMP_TEMP_SEX_AGE_NB/.FRA+DEU.M....", 
                     sdmx_resource = 'data')
-head(dat)
+ head(dat)
 
-# check availability of time series	
-dat <- sdmx_ilostat(dsd = "STI_CHL_EMP_TEMP_SEX_AGE_NB/......?detail=serieskeysonly", 
-                    sdmx_resource = 'data')
-head(dat)
 
 # as from 2009
-sdmx_ilostat("STI_ZAF_EMP_TEMP_SEX_AGE_NB/......?startPeriod=2009-01-01&detail=serieskeysonly",
+ dat <- sdmx_ilostat("STI_FRA_UNE_TUNE_SEX_AGE_NB/STI.FRA.M.5893..", 
                     sdmx_resource = 'data')
-
-# as from 2009
-dat <- sdmx_ilostat("STI_FRA_UNE_TUNE_SEX_AGE_NB/STI.FRA.M.48..", 
-                    sdmx_resource = 'data')
-head(dat)
+ head(dat)
 
 ########## dataflow available
 
-flow <- sdmx_ilostat("STI_TTO_MULTI", sdmx_resource = 'dataflow')
+ flow <- sdmx_ilostat("STI_TTO_MULTI", sdmx_resource = 'dataflow')
 
-flow <- sdmx_ilostat("KI_ALL_EMP_MULTI", sdmx_resource = 'dataflow')
+ flow <- sdmx_ilostat("KI_ALL_EMP_MULTI", sdmx_resource = 'dataflow')
 
-flow <- sdmx_ilostat("YI_FRA_UNE_MULTI", sdmx_resource = 'dataflow')
+ flow <- sdmx_ilostat("YI_FRA_UNE_MULTI", sdmx_resource = 'dataflow')
 
 ########## count data available
 
 # with multi country
-sdmx_ilostat("STI_FRA_UNE_TUNE_SEX_AGE_NB/STI.FRA.M.48..", 
+ sdmx_ilostat("STI_FRA_UNE_TUNE_SEX_AGE_NB/STI.FRA.M.5893...", 
                      sdmx_resource = 'data', count = TRUE)
 
 }
@@ -114,7 +117,7 @@ sdmx_ilostat("STI_FRA_UNE_TUNE_SEX_AGE_NB/STI.FRA.M.48..",
 See citation("Rilostat")
 
 ilostat sdmx user guidelines:
- "http://www.ilo.org/ilostat/content/conn/ILOSTATContentServer/path/Contribution Folders/statistics/web_pages/static_pages/technical_page/ilostat_appl/SDMX_User_Guide.pdf"
+ "https://www.ilo.org/ilostat-files/Documents/SDMX_User_Guide.pdf"
 }
 \author{
 David Bescond \email{bescond@ilo.org}

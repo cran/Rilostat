@@ -2,7 +2,6 @@
 % Please edit documentation in R/ilostat.R, R/utils.R
 \name{ilostat}
 \alias{ilostat}
-\alias{ilostat}
 \title{Get more Support}
 \usage{
 ilostat(id = NULL)
@@ -32,11 +31,11 @@ R Tools for ilostat Open Data
 
 # check which documentation have been recently added:
 
-ilostat() 
+ ilostat() 
 
-# get the basic first vignette:
+# get the first vignette:
 
-ilostat('GettingStarted') 
+ ilostat('RilostatStart') 
 
 }
 }
@@ -44,7 +43,7 @@ ilostat('GettingStarted')
 See citation("Rilostat")
 
 ilostat bulk download facility user guidelines 
-\url{http://www.ilo.org/ilostat-files/WEB_bulk_download/ILOSTAT_BulkDownload_Guidelines.pdf}
+\url{https://www.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
 }
 \author{
 David Bescond \email{bescond@ilo.org}
