@@ -1,6 +1,6 @@
 #' @title Read Ilostat Data
-#' @description Download datasets from ilostat \url{www.ilo.org/ilostat} via bulk download facility 
-#' \url{http://www.ilo.org/ilostat-files/WEB_bulk_download/html/bulk_main.html}.
+#' @description Download datasets from ilostat \url{https://ilostat.ilo.org} via bulk download facility 
+#' \url{https://ilostat.ilo.org/data/bulk/}.
 #' @param id A code name for the dataset of interest.
 #'        See \code{\link{get_ilostat_toc}} or details for how to get code.
 #' @param segment A character, way to get datasets by: \code{"indicator"} (default) or \code{"ref_area"}.
@@ -71,11 +71,11 @@
 #'   The cache can be emptied with \code{\link{clean_ilostat_cache}}.
 #' 
 #'   The \code{id}, a code, for the dataset can be searched with
-#'   the \code{\link{get_ilostat_toc}} or from the [bulk download facility](http://www.ilo.org/ilostat-files/WEB_bulk_download/html/bulk_main.html).
+#'   the \code{\link{get_ilostat_toc}} or from the [bulk download facility](https://ilostat.ilo.org/data/bulk/).
 #'
 #' @references
 #' See citation("Rilostat")
-#' ilostat bulk download facility user guidelines \url{http://www.ilo.org/ilostat-files/WEB_bulk_download/ILOSTAT_BulkDownload_Guidelines.pdf}
+#' ilostat bulk download facility user guidelines \url{https://ilostat.ilo.org/data/bulk/}
 #' @return a tibble. One column for each dimension in the data and
 #'         the values column for numerical values, as well as the metadata columns.
 #'         The time column for a time dimension.  
@@ -470,7 +470,7 @@ get_ilostat_dat <- function(id,
   
   if(detail %in% 'dataonly'){
 	
-	ref_dataonly <- ilostat_cols_ref[1:16]
+	ref_dataonly <- ilostat_cols_ref[1:14]
 	  
 	ref_dataonly <- ref_dataonly[ref_dataonly %in% names(dat)] 
 	  
@@ -479,7 +479,7 @@ get_ilostat_dat <- function(id,
   }
   if(detail %in% 'serieskeysonly'){
 	
-	ref_serieskeysonly <- ilostat_cols_ref[1:14]
+	ref_serieskeysonly <- ilostat_cols_ref[1:12]
 	  
 	ref_serieskeysonly <- ref_serieskeysonly[ref_serieskeysonly %in% names(dat)] 
 	  
@@ -488,7 +488,7 @@ get_ilostat_dat <- function(id,
   }
   if(detail %in% 'bestsourceonly'){
 	
-	ref_bestsourceonly <- ilostat_cols_ref[1:15]
+	ref_bestsourceonly <- ilostat_cols_ref[1:13]
 	  
 	ref_bestsourceonly <- ref_bestsourceonly[ref_bestsourceonly %in% names(dat)] 
 	  
@@ -527,22 +527,11 @@ get_ilostat_raw <- function(id,
 							cache_format, 
 							quiet) {
 
-  if(stringr::str_detect(tolower(segment), 'model')){
-  
-	base <- paste0(ilostat_url(), segment, "/", id, ".dta")	   
-  
-    dat <- NULL
-  
-    try(dat <- read_dta(base))
-
-	
-  } else {  
-	
 	base <- paste0(ilostat_url(), segment, "/", id, ".csv.gz")	   
 
     tfile <- cache_file %>% stringr::str_replace(paste0(stringr::fixed('.'), cache_format), ".csv.gz")
    
-    # download and read file
+    ### download and read file
     utils::download.file(base, tfile, quiet = quiet)
   
     if(!cache_format %in% 'csv.gz'){
@@ -555,7 +544,7 @@ get_ilostat_raw <- function(id,
   
     try(dat <- read_csv(gzfile(tfile), col_types = cols(.default = col_character(), obs_value = col_double()), progress = FALSE))
   
-  }
+  
   
   
   # check validity

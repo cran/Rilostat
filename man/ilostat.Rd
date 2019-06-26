@@ -19,7 +19,7 @@ brief description of the package
 Package: \tab Rilostat\cr
 Type: \tab Package\cr
 Version: \tab See sessionInfo() or DESCRIPTION file\cr
-Date: \tab 2015-2017\cr
+Date: \tab 2017-2020\cr
 License: \tab BSD_2_clause + LICENSE\cr
 LazyLoad: \tab yes\cr
 }
@@ -35,7 +35,7 @@ R Tools for ilostat Open Data
 
 # get the first vignette:
 
- ilostat('RilostatStart') 
+ ilostat('GettingStarted') 
 
 }
 }
