@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="ILO Department of Statistics" />
 
-<meta name="date" content="2019-06-26" />
+<meta name="date" content="2020-05-26" />
 
 <title>Bulk download in ILOSTAT:</title>
 
@@ -22,7 +22,7 @@
 <style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -35,13 +35,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -98,7 +96,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -119,9 +117,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -290,7 +285,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
 
@@ -305,7 +301,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Bulk download in ILOSTAT:</h1>
 <h4 class="author">ILO Department of Statistics</h4>
-<h4 class="date">2019-06-26</h4>
+<h4 class="date">2020-05-26</h4>
 
 
 <div id="TOC">
@@ -368,8 +364,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## 2            get_ilostat
 ## 3        get_ilostat_dic
 ## 4        get_ilostat_toc
-## 5                ilostat
-## 6          label_ilostat
+## 5          label_ilostat
+## 6            runExplorer
 ## 7           sdmx_ilostat</code></pre>
 <p>We do not expect to update the ilostat R package too often, but based on questions and remarks from ILOSTAT data users, we will progressively create more examples, tutorials, demos and apps. Please visite the <a href="https://ilostat.github.io/Rilostat/">Rilostat package website</a>.</p>
 </div>
@@ -442,10 +438,10 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">Aruba</td>
 <td align="left">A</td>
 <td align="left">Anual</td>
-<td align="left">54.04 KB</td>
+<td align="left">55.21 KB</td>
 <td align="left">1960</td>
-<td align="left">2018</td>
-<td align="left">07/06/2019 15:43:07</td>
+<td align="left">2019</td>
+<td align="left">26/03/2020 09:16:51</td>
 </tr>
 <tr class="even">
 <td align="left">ABW_M</td>
@@ -453,10 +449,10 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">Aruba</td>
 <td align="left">M</td>
 <td align="left">Mensual</td>
-<td align="left">13.92 KB</td>
+<td align="left">14.35 KB</td>
 <td align="left">1984M02</td>
-<td align="left">2019M01</td>
-<td align="left">14/04/2019 09:38:34</td>
+<td align="left">2020M02</td>
+<td align="left">17/04/2020 02:46:07</td>
 </tr>
 <tr class="odd">
 <td align="left">AFG_A</td>
@@ -464,10 +460,10 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">Afganistán</td>
 <td align="left">A</td>
 <td align="left">Anual</td>
-<td align="left">451.68 KB</td>
+<td align="left">689.13 KB</td>
 <td align="left">1970</td>
 <td align="left">2030</td>
-<td align="left">23/06/2019 07:49:31</td>
+<td align="left">24/05/2020 07:06:13</td>
 </tr>
 </tbody>
 </table>
@@ -496,7 +492,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">Collective bargaining coverage rate (%)</td>
 <td align="left">A</td>
 <td align="left">Annual</td>
-<td align="left">3.77 KB</td>
+<td align="left">3.78 KB</td>
 <td align="left">2000</td>
 <td align="left">2016</td>
 </tr>
@@ -529,10 +525,10 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">Albania</td>
 <td align="left">A</td>
 <td align="left">Annual</td>
-<td align="left">1.06 MB</td>
+<td align="left">1.61 MB</td>
 <td align="left">1960</td>
 <td align="left">2030</td>
-<td align="left">23/06/2019 07:49:46</td>
+<td align="left">24/05/2020 07:06:25</td>
 </tr>
 <tr class="even">
 <td align="left">FRA_A</td>
@@ -540,10 +536,10 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">France</td>
 <td align="left">A</td>
 <td align="left">Annual</td>
-<td align="left">3.37 MB</td>
+<td align="left">5.15 MB</td>
 <td align="left">1956</td>
 <td align="left">2030</td>
-<td align="left">23/06/2019 07:49:55</td>
+<td align="left">24/05/2020 07:06:32</td>
 </tr>
 </tbody>
 </table>
@@ -631,7 +627,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">SEX_T</td>
 <td align="left">AGE_YTHADULT_YGE15</td>
 <td align="left">1991</td>
-<td align="right">127.535</td>
+<td align="right">368.230</td>
 </tr>
 <tr class="even">
 <td align="left">AFG</td>
@@ -640,7 +636,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">SEX_T</td>
 <td align="left">AGE_YTHADULT_Y15-24</td>
 <td align="left">1991</td>
-<td align="right">63.745</td>
+<td align="right">181.048</td>
 </tr>
 <tr class="odd">
 <td align="left">AFG</td>
@@ -649,7 +645,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">SEX_T</td>
 <td align="left">AGE_YTHADULT_YGE25</td>
 <td align="left">1991</td>
-<td align="right">63.790</td>
+<td align="right">187.182</td>
 </tr>
 </tbody>
 </table>
@@ -673,29 +669,29 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <tr class="odd">
 <td align="left">ARM</td>
 <td align="left">XA:1931</td>
-<td align="left">GDP_211P_NOC_NB</td>
+<td align="left">POP_2LDR_NOC_RT</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">1991</td>
-<td align="right">8195.842</td>
+<td align="right">1.534209</td>
 </tr>
 <tr class="even">
 <td align="left">ARM</td>
 <td align="left">XA:1931</td>
-<td align="left">GDP_211P_NOC_NB</td>
+<td align="left">POP_2LDR_NOC_RT</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">1992</td>
-<td align="right">4871.177</td>
+<td align="right">1.549716</td>
 </tr>
 <tr class="odd">
 <td align="left">ARM</td>
 <td align="left">XA:1931</td>
-<td align="left">GDP_211P_NOC_NB</td>
+<td align="left">POP_2LDR_NOC_RT</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">1993</td>
-<td align="right">4722.154</td>
+<td align="right">1.656635</td>
 </tr>
 </tbody>
 </table>
@@ -710,8 +706,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <pre><code>## # A tibble: 2 x 2
 ##   ref_area      n
 ##   &lt;chr&gt;     &lt;int&gt;
-## 1 AFG       60136
-## 2 TTO      119279</code></pre>
+## 1 AFG       91888
+## 2 TTO      190649</code></pre>
 <p><BR></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">toc &lt;-<span class="st"> </span><span class="kw">get_ilostat_toc</span>(<span class="dt">search =</span> <span class="st">'CPI_'</span>)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"></a>
@@ -721,11 +717,11 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <pre><code>## # A tibble: 5 x 2
 ##   indicator            n
 ##   &lt;chr&gt;            &lt;int&gt;
-## 1 CPI_ACPI_COI_RT 184570
-## 2 CPI_MCPI_COI_RT 159458
-## 3 CPI_NCPD_COI_RT  84324
-## 4 CPI_NCYR_COI_RT 108221
-## 5 CPI_NWGT_COI_DT  26050</code></pre>
+## 1 CPI_ACPI_COI_RT 166525
+## 2 CPI_MCPI_COI_RT 143271
+## 3 CPI_NCPD_COI_RT  92229
+## 4 CPI_NCYR_COI_RT 120058
+## 5 CPI_NWGT_COI_DT  29805</code></pre>
 </div>
 </div>
 <div id="time-format" class="section level1">
@@ -922,7 +918,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">SEX_F</td>
 <td align="left">AGE_YTHADULT_Y15-24</td>
 <td align="left">1991</td>
-<td align="right">14.241</td>
+<td align="right">14.729</td>
 </tr>
 <tr class="even">
 <td align="left">BRA</td>
@@ -931,7 +927,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">SEX_F</td>
 <td align="left">AGE_YTHADULT_Y15-24</td>
 <td align="left">1992</td>
-<td align="right">14.800</td>
+<td align="right">14.813</td>
 </tr>
 <tr class="odd">
 <td align="left">BRA</td>
@@ -940,7 +936,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td align="left">SEX_F</td>
 <td align="left">AGE_YTHADULT_Y15-24</td>
 <td align="left">1993</td>
-<td align="right">13.989</td>
+<td align="right">14.008</td>
 </tr>
 </tbody>
 </table>
@@ -1118,6 +1114,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p><a href="https://www.ilo.org/global/copyright/request-for-permission" class="uri">https://www.ilo.org/global/copyright/request-for-permission</a></p>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
