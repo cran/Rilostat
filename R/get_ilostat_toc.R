@@ -33,8 +33,6 @@
 #' The values in column 'id' should be used to download a selected dataset.
 #' @details The TOC in English by ref_area is downloaded from \url{https://www.ilo.org/ilostat-files/WEB_bulk_download/ref_area/table_of_contents_en.csv}. 
 #' The values in column 'id' should be used to download a selected dataset.
-#' @details The TOC in English by modelled_estimates is downloaded from \url{https://www.ilo.org/ilostat-files/WEB_bulk_download/modelled_estimates/table_of_contents_en.csv}. 
-#' The values in column 'id' should be used to download a selected dataset.
 #' @references
 #' See citation("Rilostat")
 #' ilostat bulk download facility user guidelines \url{https://www.ilo.org/ilostat-files/WEB_bulk_download/ILOSTAT_BulkDownload_Guidelines.pdf} 

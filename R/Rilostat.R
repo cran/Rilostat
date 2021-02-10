@@ -72,14 +72,15 @@
 #' @importFrom data.table fwrite
 #' @importFrom data.table fread
 #' @importFrom DT datatable
+
 #' @examples
 #' \dontrun{
 #'
 #' # check which documentation have been recently added:
 #'
-#'  ?Rilostat 
+#'  # help(Rilostat) 
 #' 
-#'  https://ilostat.github.io/Rilostat/ 
+#'  # https://ilostat.github.io/Rilostat/ 
 #' 
 #' }
 NULL
