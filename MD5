@@ -1,14 +1,14 @@
-21ff1d58fa15dd60fc9eeaf572aa1847 *DESCRIPTION
+31c01f4c0fe9aa0a814549c9f40bb10b *DESCRIPTION
 c2cd34144e9faa3560ad1474acce4841 *LICENSE
 725ab5dd30aba4ed1aecdfad8733a2e4 *NAMESPACE
-81b53cf21663074f612ef0407dfd2e98 *NEWS.md
+c724898131b08f56283e92460cff84ed *NEWS.md
 f1423e02cacef41be45d047180c86343 *R/Rilostat.R
 f9c5a7e5fe72365f0e93048f38f881c6 *R/clean_ilostat_cache.R
 96a4fb3cb1e67dad7f09e94966189dd7 *R/get_ilostat.R
 84fb584b4bb8342c4a1e0256af82590d *R/get_ilostat_dic.R
 4862628829c8a98e4cdfeff04bc2257a *R/get_ilostat_toc.R
 63ccad7d79d6a424341a6e5e53cd1375 *R/label_ilostat.R
-f4f1c1f0e0f0cc3961cab89ef45c3fb1 *R/runExplorer.R
+f10b5afd01d42db79f8238afbbe58072 *R/runExplorer.R
 1323dd1f4371abb5aff6fc944ce2a37c *R/sdmx_ilostat.R
 2ff0d0b4d1390c077abca5da9f37f7dd *R/sysdata.rda
 fc06f679e78fac7a86457b2bbb170cfc *README.md
@@ -18,6 +18,6 @@ de6f980062e9af6edd6a750005e027d7 *man/get_ilostat.Rd
 2f6ef6e5cd513aa5b8c5e572646c1489 *man/get_ilostat_dic.Rd
 df7a546d12529917d98d01e764547627 *man/get_ilostat_toc.Rd
 18155ee9ab64048669a74d191c1b9f97 *man/label_ilostat.Rd
-8ea0ea2c8826338b834bd14e76a744eb *man/runExplorer.Rd
+386348a40131d5f5adce5a6a206f1663 *man/runExplorer.Rd
 2b3d5d308c7cbad6fef3bd68bc3f5d49 *man/sdmx_ilostat.Rd
 67b5b6e2acc43108af443f330ba87c7f *tests/testthat/test-all.R
