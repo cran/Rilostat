@@ -3,6 +3,10 @@ output:
   html_document: 
     keep_md: yes
 ---
+# Rilostat 1.1.8
+
+* add distribution feature
+
 # Rilostat 1.1.7
 
 * fixed dependency issues

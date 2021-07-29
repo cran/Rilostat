@@ -45,6 +45,8 @@
 #'        \code{"sav"}, \code{"sas7bdat"}. useful for getting ilostat dataset directly on the \code{cache_dir} without R.  
 #' 			Can be set also with options(ilostat_cache_format = 'dta'),  
 #' @param back a logical, \code{TRUE} return dataframe on R or not \code{FALSE}, useful for just saving file in specific \code{cache_format},
+#' @param distribution a character, transform number of persons into distribution by sex or classif1 or classif2, \code{"sex"}, \code{"classif1"} or \code{"classif2"}.
+#'        Can be set also with options(ilostat_distribution = 'classif1'), default is \code{'no'}, 
 #' @param cmd a character, R expression use for manipulate internal data frame \code{dat} object applied to each datasets retrieved 
 #         after filters and type setting. Manipulation should return data.frame \code{'none'} (default),
 #'        If use, \code{cache} is set to FALSE. see examples. 
@@ -128,6 +130,22 @@
 #'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", 
 #'                   cache_dir = file.path(tempdir(), "r_cache"), cache_format = 'dta')
 #'
+#' ############# use distribution
+#'
+#'  dat <- get_ilostat("EMP_TEMP_SEX_STE_GEO_NB_A", distribution = 'classif1')
+#'
+#'	# obs_status and note_classif could not be pivot as store at value level
+#'
+#'   select(dat, -obs_status, -note_classif) %>% spread(classif1, obs_value)
+#'
+#'  # use label
+#'
+#'	get_ilostat(dat, "EMP_TEMP_SEX_STE_GEO_NB_A", distribution = 'classif1', type = 'label')
+#'
+#'	select(dat, -obs_status.label, -note_classif.label) %>% spread(classif1.label, obs_value)
+#'
+#'	clean_ilostat_cache()
+#'
 #' ############# advanced manipulation
 #'
 #'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", cmd = "dat %>% count(ref_area)", quiet = TRUE)
@@ -150,6 +168,7 @@ get_ilostat <- function(id,
 						cache_dir = getOption('ilostat_cache_dir', NULL),
 						cache_format = getOption('ilostat_cache_format', 'rds'),
 						back = getOption('ilostat_back', TRUE),
+						distribution = getOption('ilostat_distribution', 'no'),
 						cmd = getOption('ilostat_cmd', 'none'),
 						quiet = getOption('ilostat_quiet', FALSE)){
 
@@ -179,7 +198,7 @@ get_ilostat <- function(id,
 				
 				dat, 
 				
-				get_ilostat_dat(id = ref_id[i], segment, type, lang, time_format, filters, fixed, detail, cache, cache_update,	cache_dir, cache_format, back, cmd, quiet 
+				get_ilostat_dat(id = ref_id[i], segment, type, lang, time_format, filters, fixed, detail, cache, cache_update,	cache_dir, cache_format, back, distribution, cmd, quiet 
 								
 				)
 			)
@@ -195,7 +214,7 @@ get_ilostat <- function(id,
 
 
 get_ilostat_dat <- function(id, 
-							segment, 
+							segment,
 							type, 
 							lang, 
 							time_format,
@@ -207,14 +226,18 @@ get_ilostat_dat <- function(id,
 							cache_dir,
 							cache_format,
 							back,
+							distribution,							
 							cmd, 
 							quiet 
 							){
 
   # check id validity and return last update
   ref_id <- id
-  last_toc_update <- get_ilostat_toc(segment, lang) %>% 
-					 filter(id %in% ref_id) 
+  
+  last_toc_update 	<- filter(get_ilostat_toc(segment, lang), id %in% ref_id) 
+  
+  distribution_check <- filter(get_ilostat_toc(segment, 'en'), id %in% ref_id)[["indicator.label"]]
+					 
   last_toc_update <- unique(last_toc_update$last.update)
 					
   last_toc_update <- ifelse(substr(last_toc_update, 6,8) %in% '/20', 
@@ -243,7 +266,7 @@ get_ilostat_dat <- function(id,
   if (!file.exists(cache_dir)) stop("The folder ", cache_dir, " does not exist")	
 
   # cache filename
-  cache_file <- file.path(cache_dir, paste0(segment, "-", id, "-", type,"-",time_format, "-", last_toc_update ,paste0(".", cache_format)))
+  cache_file <- file.path(cache_dir, paste0(segment, "-", id, "-", ifelse(distribution %in% c("sex", "classif1", "classif2") & str_detect(tolower(distribution_check), "thousands") %in% TRUE, paste0("DT_", distribution, "-"), ""), type,"-",time_format, "-", last_toc_update ,paste0(".", cache_format)))
   
   if (cache){
     
@@ -261,16 +284,34 @@ get_ilostat_dat <- function(id,
   
   }
   
-  # if cache = FALSE or update or new: download else read from cache
   if (!cache || cache_update || !file.exists(cache_file) ){
       
 	  dat <- get_ilostat_raw(id, segment, cache_file, cache_dir, cache_format, quiet)
 	
+	  if(tolower(distribution) %in% c('sex', 'classif1','classif2')){
+	  
+	   
+		if(str_detect(tolower(distribution_check), "thousands") %in% c(FALSE, NA)){
+		
+			message(paste0("Warning: distribution not applicable for dataset: '",id,"'"))
+				
+		} 
+		
+		if(!str_detect(paste0(colnames(dat), collapse = "/"), tolower(distribution))){
+			
+			message(paste0("Error: distribution, '",tolower(distribution),"' variable not available on this dataset"))
+		
+		} else 	dat <- dat %>% distribution_ilostat(distribution) 
+	  
+	  
+	  
+	  }
+	
 	  
       if (type %in% 'code') {
         
-		dat <- dat 
-	  
+		# do nothing
+	
 	  } else if(type %in% 'both') {
 		
 		dat <- label_ilostat(dat, code = 'all', lang = lang)
@@ -559,4 +600,3 @@ get_ilostat_raw <- function(id,
   
   dat
 }
-

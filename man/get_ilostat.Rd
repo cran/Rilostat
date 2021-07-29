@@ -18,6 +18,7 @@ get_ilostat(
   cache_dir = getOption("ilostat_cache_dir", NULL),
   cache_format = getOption("ilostat_cache_format", "rds"),
   back = getOption("ilostat_back", TRUE),
+  distribution = getOption("ilostat_distribution", "no"),
   cmd = getOption("ilostat_cmd", "none"),
   quiet = getOption("ilostat_quiet", FALSE)
 )
@@ -79,6 +80,9 @@ The \code{NULL} (default) uses and creates
      Can be set also with options(ilostat_cache_format = 'dta'),}
 
 \item{back}{a logical, \code{TRUE} return dataframe on R or not \code{FALSE}, useful for just saving file in specific \code{cache_format},}
+
+\item{distribution}{a character, transform number of persons into distribution by sex or classif1 or classif2, \code{"sex"}, \code{"classif1"} or \code{"classif2"}.
+Can be set also with options(ilostat_distribution = 'classif1'), default is \code{'no'},}
 
 \item{cmd}{a character, R expression use for manipulate internal data frame \code{dat} object applied to each datasets retrieved 
 If use, \code{cache} is set to FALSE. see examples.}
@@ -165,6 +169,22 @@ Download datasets from ilostat \url{https://ilostat.ilo.org} via bulk download f
                   cache_dir = file.path(tempdir(), "r_cache"), cache_format = 'csv')
  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", 
                   cache_dir = file.path(tempdir(), "r_cache"), cache_format = 'dta')
+
+############# use distribution
+
+ dat <- get_ilostat("EMP_TEMP_SEX_STE_GEO_NB_A", distribution = 'classif1')
+
+# obs_status and note_classif could not be pivot as store at value level
+
+  select(dat, -obs_status, -note_classif) \%>\% spread(classif1, obs_value)
+
+ # use label
+
+get_ilostat(dat, "EMP_TEMP_SEX_STE_GEO_NB_A", distribution = 'classif1', type = 'label')
+
+select(dat, -obs_status.label, -note_classif.label) \%>\% spread(classif1.label, obs_value)
+
+clean_ilostat_cache()
 
 ############# advanced manipulation
 
