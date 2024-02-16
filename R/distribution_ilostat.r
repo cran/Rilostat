@@ -1,5 +1,5 @@
 #' @title Switch ilostat to distribution 
-#' @description Gets distribution for ilostat number of persons only.
+#' @description Get distribution for ilostat number of persons only.
 #' @param x  dataset to transform into distribution. 
 #' @param var  String variable name use for the distribution default \code{"no"}, 
 #' 		could be \code{"sex"}, \code{"classif1"}, \code{"classif2"}.
@@ -18,7 +18,7 @@
 #' @references
 #' See citation("Rilostat")
 #' ilostat bulk download facility user guidelines 
-#' \url{https://www.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
+#' \url{https://webapps.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
 #' @examples
 #' \dontrun{
 #'  dat <- get_ilostat("EMP_TEMP_SEX_STE_GEO_NB_A", cache = FALSE)
@@ -27,6 +27,7 @@
 #'  clean_ilostat_cache() 
 #' }
 #' @export
+
 distribution_ilostat <- function(x, var){
 
 		

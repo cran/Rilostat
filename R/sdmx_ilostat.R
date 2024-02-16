@@ -15,7 +15,7 @@
 #' See citation("Rilostat")
 #' 
 #' ilostat sdmx user guidelines:
-#'  "https://www.ilo.org/ilostat-files/Documents/SDMX_User_Guide.pdf"
+#' \url{https://webapps.ilo.org/ilostat-files/Documents/SDMX_User_Guide.pdf}
 
 #' @examples 
 #' \dontrun{
@@ -40,43 +40,34 @@
 #'  dic <- sdmx_ilostat(dsd = "CL_NOTE_R1", lang ="en")
 #'  head(dic)
 #'
-#' ########## get data
+#' ######## get data
+#'
+#' # to get the order of the filter first get the conceptref of the DSD
+#'
+#'  filter_position <- sdmx_ilostat(dsd = 'EMP_TEMP_SEX_AGE_NB', 
+#'  				   sdmx_resource = 'conceptref')
+#'  filter_position
+#'
+#' # COUNTRY and FREQ are in first and second position of the filters
+#'
+#'  dat <- sdmx_ilostat(dsd = "EMP_TEMP_SEX_AGE_NB/FRA+DEU.Q...", 
+#'                     sdmx_resource = 'data')
+#'  head(dat)
 #'
 #' ### with attribute
-#'  dat <- sdmx_ilostat(dsd = 'STI_ALB_EMP_TEMP_SEX_AGE_NB', 
+#'  dat <- sdmx_ilostat(dsd = 'EMP_TEMP_SEX_AGE_NB/ARG.Q...', 
 #'                     sdmx_resource = 'data')
 #'  head(dat)
 #'
 #' # without attribute
-#'  dat <- sdmx_ilostat(dsd = "STI_DEU_EMP_TEMP_SEX_AGE_NB?detail=dataonly", 
+#'  dat <- sdmx_ilostat(dsd = "EMP_TEMP_SEX_AGE_NB/ARG.Q...?detail=dataonly", 
 #'                     sdmx_resource = 'data')
 #'  head(dat)
 #'
-#' ######## with multi country and advanced filters
-#'
-#' # to get the order of the filter first get the conceptref of the DSD
-#'
-#'  filter_position <- sdmx_ilostat(dsd = 'STI_ALL_EMP_TEMP_SEX_AGE_NB', 
-#'  				   sdmx_resource = 'conceptref')
-#'  filter_position
-#'
-#' # COUNTRY and FREQ are in second and third position of the filters
-#'
-#'  dat <- sdmx_ilostat(dsd = "STI_ALL_EMP_TEMP_SEX_AGE_NB/.FRA+DEU.Q....", 
-#'                     sdmx_resource = 'data')
-#'  head(dat)
-#'
-#' ########## dataflow available
-#'
-#'  flow <- sdmx_ilostat("STI_TTO_MULTI", sdmx_resource = 'dataflow')
-#'
-#'  flow <- sdmx_ilostat("KI_ALL_EMP_MULTI", sdmx_resource = 'dataflow')
-#'
-#'  flow <- sdmx_ilostat("YI_FRA_UNE_MULTI", sdmx_resource = 'dataflow')
 #'
 #' ########## count data available
 #'
-#'  sdmx_ilostat("STI_FRA_UNE_TUNE_SEX_AGE_NB/STI.FRA.....", 
+#'  sdmx_ilostat("UNE_TUNE_SEX_AGE_NB/FRA.Q...", 
 #'                      sdmx_resource = 'data', count = TRUE)
 #'
 #' }
@@ -131,7 +122,7 @@ sdmx_ilostat_data 		<- function (	dsd,
 				paste0(dsd, "?format=", sdmx_format)
 			)
 	
-	mypath <- paste0("https://www.ilo.org/sdmx/rest/data/ILO,DF_",dsd)
+	mypath <- paste0("https://webapps.ilo.org/sdmx/rest/data/ILO,DF_",dsd)
 	
 
 	if(sdmx_format %in% 'csv') {
@@ -232,7 +223,7 @@ sdmx_ilostat_count 		<- function( dsd,
   
   }
   
-  mypath <- paste0("https://www.ilo.org/sdmx/rest/data/ILO,DF_",dsd)
+  mypath <- paste0("https://webapps.ilo.org/sdmx/rest/data/ILO,DF_",dsd)
   
 	X <- 	try(fread(mypath) %>% as_tibble, silent = TRUE)
 
@@ -272,7 +263,7 @@ sdmx_ilostat_codelist	<- function(dsd,
 
   mypath <- paste0(
 	          
-			  "https://www.ilo.org/sdmx/rest/codelist/ILO/",
+			  "https://webapps.ilo.org/sdmx/rest/codelist/ILO/",
 			  
 			  dsd
 			)
@@ -351,7 +342,7 @@ sdmx_ilostat_dataflow 	<- function(  dsd,
 									quiet){
   mypath <- paste0(
 	          
-			  "https://www.ilo.org/sdmx/rest/dataflow/ILO/DF_",
+			  "https://webapps.ilo.org/sdmx/rest/dataflow/ILO/DF_",
 			  
 			  dsd
 			)
@@ -409,7 +400,7 @@ sdmx_ilostat_conceptRef <- function(dsd,
 
   mypath <- paste0(
 	          
-			  "https://www.ilo.org/sdmx/rest/datastructure/ILO/",
+			  "https://webapps.ilo.org/sdmx/rest/datastructure/ILO/",
 			  
 			  dsd
 			)

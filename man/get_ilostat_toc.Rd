@@ -52,10 +52,10 @@ Download one table of contents from ilostat \url{https://ilostat.ilo.org} via bu
 \url{https://ilostat.ilo.org/data/bulk/}.
 }
 \details{
-The TOC in English by indicator is downloaded from \url{https://www.ilo.org/ilostat-files/WEB_bulk_download/indicator/table_of_contents_en.csv}. 
+The TOC in English by indicator is downloaded from \url{https://webapps.ilo.org/ilostat-files/WEB_bulk_download/indicator/table_of_contents_en.csv}. 
 The values in column 'id' should be used to download a selected dataset.
 
-The TOC in English by ref_area is downloaded from \url{https://www.ilo.org/ilostat-files/WEB_bulk_download/ref_area/table_of_contents_en.csv}. 
+The TOC in English by ref_area is downloaded from \url{https://webapps.ilo.org/ilostat-files/WEB_bulk_download/ref_area/table_of_contents_en.csv}. 
 The values in column 'id' should be used to download a selected dataset.
 }
 \examples{
@@ -69,7 +69,7 @@ The values in column 'id' should be used to download a selected dataset.
 ## search on toc
  toc <- get_ilostat_toc(search = 'education')
  head(toc)
- toc <- get_ilostat_toc(lang = 'fr', search = 'Ã©ducation')
+ toc <- get_ilostat_toc(lang = 'fr', search = 'éducation')
  head(toc)
  toc <- get_ilostat_toc(segment = 'ref_area', lang = 'fr', search = 'Albanie')
  toc
@@ -89,7 +89,7 @@ The values in column 'id' should be used to download a selected dataset.
 }
 \references{
 See citation("Rilostat")
-ilostat bulk download facility user guidelines \url{https://www.ilo.org/ilostat-files/WEB_bulk_download/ILOSTAT_BulkDownload_Guidelines.pdf}
+ilostat bulk download facility user guidelines \url{https://webapps.ilo.org/ilostat-files/WEB_bulk_download/ILOSTAT_BulkDownload_Guidelines.pdf}
 }
 \seealso{
 \code{\link{get_ilostat}}.

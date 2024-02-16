@@ -21,7 +21,7 @@
 #' See citation("Rilostat")
 #'
 #' ilostat bulk download facility user guidelines 
-#' \url{https://www.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
+#' \url{https://webapps.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
 #'
 #' @keywords package
 #' @importFrom readr read_csv
@@ -32,22 +32,13 @@
 #' @importFrom plyr ldply
 #' @importFrom plyr mapvalues
 #' @importFrom dplyr %>%
-#' @importFrom dplyr select
 #' @importFrom dplyr select_at
 #' @importFrom dplyr filter
-#' @importFrom dplyr contains
-#' @importFrom dplyr vars
 #' @importFrom dplyr distinct
 #' @importFrom dplyr bind_rows
-#' @importFrom dplyr left_join
 #' @importFrom dplyr mutate
 #' @importFrom dplyr summarise
-#' @importFrom dplyr n
-#' @importFrom dplyr group_by
 #' @importFrom dplyr group_by_at
-#' @importFrom dplyr ungroup
-#' @importFrom tidyr separate
-#' @importFrom tidyr unite
 #' @importFrom haven read_dta
 #' @importFrom haven read_sav
 #' @importFrom haven read_sas
@@ -60,23 +51,17 @@
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_split
 #' @importFrom stringr fixed
-#' @importFrom tibble data_frame
 #' @importFrom tibble is_tibble
 #' @importFrom tibble as_tibble
 #' @importFrom utils download.file
-#' @importFrom utils install.packages
-#' @importFrom utils installed.packages
-#' @importFrom utils menu
 #' @importFrom xml2 read_xml
 #' @importFrom xml2 xml_find_all
 #' @importFrom xml2 xml_attrs
 #' @importFrom xml2 xml_attr
 #' @importFrom xml2 xml_text
 #' @importFrom xml2 xml_ns
-#' @importFrom RCurl ftpUpload
 #' @importFrom data.table fwrite
 #' @importFrom data.table fread
-#' @importFrom DT datatable
 
 #' @examples
 #' \dontrun{
@@ -88,38 +73,14 @@
 #'  # https://ilostat.github.io/Rilostat/ 
 #' 
 #' }
-NULL
 
 
 
 ilostat_url <- function() {
 
-  "https://www.ilo.org/ilostat-files/WEB_bulk_download/"
+  readLines("https://webapps.ilo.org/ilostat-files/Documents/rds/bulkdownloadURL.txt")
 
   }
-
-check_pkg_for_ilostat_apps <- function(pkgs){
-
-test_packages_for_ilostat <- NULL
-if (length(setdiff(pkgs, rownames(installed.packages()))) > 0) {
-  new_package <- setdiff(pkgs, rownames(installed.packages()))
-  for (i in 1:length(new_package)){
-	answer <- menu(c("Yes", "No"), title= paste0("package : ",new_package[i], " is not available, do you want to install it ? "))
-	if(answer == 1) { 
-	  install.packages(new_package[i],  repos='http://cran.us.r-project.org') 
-	} 
-	
-	if(answer == 2) {
-	  test_packages_for_ilostat <- 'NORUN'
-	  message('application could not be run as all requests packages have not been installed !')
-	return(NULL)
-	}
-  }
-}
-sapply(pkgs, require, character.only = TRUE)
-	return('OK')
-}
-
 
 filters_ilostat <- function(
 							filters, 

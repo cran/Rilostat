@@ -16,7 +16,7 @@ could be \code{"sex"}, \code{"classif1"}, \code{"classif2"}.}
 a data_frame. obs_status will no longer be a number of persons but a percentage.
 }
 \description{
-Gets distribution for ilostat number of persons only.
+Get distribution for ilostat number of persons only.
 }
 \details{
 this function use the max of the corresponding grouping so it is 
@@ -39,7 +39,7 @@ this function use the max of the corresponding grouping so it is
 \references{
 See citation("Rilostat")
 ilostat bulk download facility user guidelines 
-\url{https://www.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
+\url{https://webapps.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
 }
 \author{
 David Bescond \email{bescond@ilo.org}

@@ -18,7 +18,7 @@
 #' @references
 #' See citation("Rilostat")
 #' ilostat bulk download facility user guidelines 
-#' \url{https://www.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
+#' \url{https://webapps.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
 #' @examples
 #' \dontrun{
 #'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", cache = FALSE)
@@ -129,7 +129,7 @@ label_ilostat <- function(	x,
 
   }
 
-  # Ensure the output is tbl_df
+  # Ensure the output is tibble
 
   if (is.data.frame(y) && length(y) > 1) {
     

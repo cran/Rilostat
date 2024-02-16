@@ -36,7 +36,7 @@ clean_ilostat_cache()
 \references{
 See citation("Rilostat")
 ilostat bulk download facility user guidelines 
-\url{https://www.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
+\url{https://webapps.ilo.org/ilostat-files/Documents/ILOSTAT_BulkDownload_Guidelines.pdf}
 }
 \author{
 David Bescond \email{bescond@ilo.org}
