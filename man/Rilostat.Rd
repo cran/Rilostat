@@ -2,11 +2,7 @@
 % Please edit documentation in R/Rilostat.R
 \name{Rilostat}
 \alias{Rilostat}
-\alias{ilostat_url}
 \title{Get more Support}
-\usage{
-ilostat_url()
-}
 \description{
 On regular basis new tutorial and examples are building and available through this function.
 }

@@ -56,12 +56,6 @@
 #' @importFrom tibble is_tibble
 #' @importFrom tibble as_tibble
 #' @importFrom utils download.file
-#' @importFrom xml2 read_xml
-#' @importFrom xml2 xml_find_all
-#' @importFrom xml2 xml_attrs
-#' @importFrom xml2 xml_attr
-#' @importFrom xml2 xml_text
-#' @importFrom xml2 xml_ns
 #' @importFrom data.table fwrite
 #' @importFrom data.table fread
 
@@ -76,15 +70,15 @@
 #' 
 #' }
 
-
+NULL
 
 ilostat_url <- function() {
 
 	if(dir.exists('/mnt/rds/')) {
 		'/mnt/rds/'
 	} else {
-		'https://webapps.ilo.org/ilostat-files/Documents/rds/'	
-	}
+		'https://rplumber.ilo.org/'
+		}
   
   }
 
