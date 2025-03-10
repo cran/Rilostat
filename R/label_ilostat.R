@@ -24,6 +24,17 @@
 #'  dat <- get_ilostat("UNE_2UNE_SEX_AGE_NB_A", cache = FALSE)
 #'  dat_lab <- label_ilostat(dat)
 #'  head(dat_lab)
+#'
+#'
+#'  # add just ref_area label
+#' require(tidyverse)
+#'
+#' dat <- get_ilostat("UNE_TUNE_SEX_AGE_NB_A") %>% 
+#'		mutate(ref_area.label = ref_area %>% 
+#'		label_ilostat( "ref_area", code = "all"), .after = ref_area)
+#'
+#'
+#'
 #'  clean_ilostat_cache() 
 #' }
 #' @export
@@ -43,9 +54,10 @@ label_ilostat <- function(	x,
 	    
 		code <- ilostat_cols_ref[ilostat_cols_ref %in% names(y) & !ilostat_cols_ref %in% c('time','obs_value')] 
 	  
-	  }
+	  } else {
 	  
-	  code <- code[!stringr::str_detect(code, '.label')]
+		code <- code[!stringr::str_detect(code, '.label')]
+		}
 	
 	}
 
